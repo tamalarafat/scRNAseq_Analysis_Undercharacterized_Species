@@ -1,0 +1,2 @@
+"","ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0000981","GO:0000981","DNA-binding transcription factor activity, RNA polymerase II-specific","6/75","272/21875",0.000343451724375437,0.0394969483031753,0.0357912849612298,"NA/ATHB13/NA/AtGATA18/ATH1/HAT2",6

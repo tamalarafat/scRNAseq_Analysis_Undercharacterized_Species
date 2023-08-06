@@ -12,5 +12,5 @@ load("/home/yasir/Documents/Thesis_PhD/Chapter_1/Analysis_objects/Seurat_object_
 Idents(integrated.data) <- "RNA_snn_res.0.3"
 
 # Lets plot the heatmaps with all the cells
-map_factor_loadings(seuratObject = integrated.data, reduction_name = "inmfcc", store_dir = getwd(), store_folder = "GEPs_distribution")
+map_factor_loadings(seuratObject = integrated.data, factor_to_plot = "inmfcc", store_dir = getwd(), store_folder = "GEPs_distribution")
 

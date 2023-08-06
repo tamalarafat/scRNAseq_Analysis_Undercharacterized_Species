@@ -16,11 +16,3 @@ cluster.ids = levels(Idents(integrated.data))
 for (i in c(1:length(cluster.ids))){
   heatmap_cells_coefficient(seuratObject = integrated.data, store_dir = getwd(), reduction_pattern = "inmfcc",store_folder = "Heatmap_of_clusters_inmfcc", cell_ids = WhichCells(integrated.data, idents = cluster.ids[i]), figureName = str_c("Cluster_", cluster.ids[i]))
 }
-
-md = integrated.data@meta.data
-md$cell_ID = rownames(md)
-
-md = md[, c("cell_ID", "RNA_snn_res.0.3")]
-colnames(md)[2] <- "withCC"
-
-save(md, file = "withCC.RData")

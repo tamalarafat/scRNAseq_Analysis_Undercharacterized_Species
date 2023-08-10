@@ -1,0 +1,3 @@
+"","ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0000148","GO:0000148","1,3-beta-D-glucan synthase complex","2/142","12/25124",0.00201724208039083,0.0460906093876442,0.0451315636598719,"ATGSL07/ATGSL04",2
+"GO:0031225","GO:0031225","anchored component of membrane","7/142","315/25124",0.00214374927384392,0.0460906093876442,0.0451315636598719,"NA/NA/NHL17/AGP10/NA/NA/AGP14",7

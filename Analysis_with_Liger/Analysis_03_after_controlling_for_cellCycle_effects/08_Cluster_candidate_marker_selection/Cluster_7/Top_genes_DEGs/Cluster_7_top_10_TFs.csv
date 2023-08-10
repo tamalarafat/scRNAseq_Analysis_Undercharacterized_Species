@@ -1,0 +1,2 @@
+"gene_ID","AT_ID","Gene_code_name","avg_log2FC","pct.1","pct.2","p_val","p_val_adj","TF","TF_family","Gene_functions","source"
+"Chir04Ox-b20230.2","AT2G37260","TTG2",0.695689877806295,0.725,0.124,0,0,"Yes","WRKY","DNA-binding transcription factor activity, epidermal cell fate specification, nucleus, regulation of DNA-templated transcription, seed coat development, sequence-specific DNA binding","DEGs"

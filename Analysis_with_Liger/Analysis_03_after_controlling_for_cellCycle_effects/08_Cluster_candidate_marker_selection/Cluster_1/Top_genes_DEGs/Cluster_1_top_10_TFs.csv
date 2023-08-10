@@ -1,0 +1,2 @@
+"gene_ID","AT_ID","Gene_code_name","avg_log2FC","pct.1","pct.2","p_val","p_val_adj","TF","TF_family","Gene_functions","source"
+"Chir01Ox-b25290.2","AT1G25440","BBX15",0.340884393127903,0.699,0.378,0,0,"Yes","CO-like","DNA-binding transcription factor activity, nucleus, protein binding, regulation of DNA-templated transcription, zinc ion binding","DEGs"

@@ -1,0 +1,5 @@
+"","ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0004805","GO:0004805","trehalose-phosphatase activity","3/145","11/21809",4.56783182420628e-05,0.00593818137146817,0.00562564550981195,"ATTPPB/TPPH/TPPJ",3
+"GO:0001228","GO:0001228","DNA-binding transcription activator activity, RNA polymerase II-specific","4/145","69/21809",0.00115918152512363,0.0488746005537792,0.0463022531562119,"NA/AtbHLH112/NA/bhlh68",4
+"GO:0001216","GO:0001216","DNA-binding transcription activator activity","4/145","74/21809",0.00150383386319321,0.0488746005537792,0.0463022531562119,"NA/AtbHLH112/NA/bhlh68",4
+"GO:0004084","GO:0004084","branched-chain-amino-acid transaminase activity","2/145","10/21809",0.00190764195114341,0.0495986907297285,0.0469882333229007,"ATBCAT-2/BCAT4",2

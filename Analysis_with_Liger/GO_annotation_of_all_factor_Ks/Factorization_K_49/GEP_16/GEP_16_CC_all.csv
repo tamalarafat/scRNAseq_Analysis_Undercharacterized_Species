@@ -1,0 +1,3 @@
+"","ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0090575","GO:0090575","RNA polymerase II transcription regulator complex","1/11","85/25052",0.0367028095570143,0.0556338750112446,0.0292809868480235,"NA",1
+"GO:0005667","GO:0005667","transcription regulator complex","1/11","130/25052",0.0556338750112446,0.0556338750112446,0.0292809868480235,"NA",1

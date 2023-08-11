@@ -1,0 +1,3 @@
+"","ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0099503","GO:0099503","secretory vesicle","4/31","173/25052",5.97419671439024e-05,0.000119483934287805,6.28862812041078e-05,"ATPDI6/NA/NA/ChiC",4
+"GO:0005615","GO:0005615","extracellular space","1/31","130/25052",0.149032321381136,0.149032321381136,0.0784380638848082,"AtCAPE8",1

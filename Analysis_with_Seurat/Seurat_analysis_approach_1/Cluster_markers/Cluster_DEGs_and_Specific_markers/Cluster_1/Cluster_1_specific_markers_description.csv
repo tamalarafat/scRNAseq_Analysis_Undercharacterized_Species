@@ -1,0 +1,2 @@
+"gene_ID","p_val","avg_log2FC","pct.1","pct.2","p_val_adj","AT_ID","TF","TF_family","Gene_code_name","Gene_functions"
+"Chir04Ox-b21570.2",0,1.68032264498672,0.974,0.622,0,"AT2G39010",NA,NA,"PIP2E","cell wall organization or biogenesis, channel activity, Golgi apparatus, hyperosmotic salinity response, mRNA binding, plasma membrane, response to abscisic acid, response to cold, response to light stimulus, response to nematode, response to salt stress, response to water deprivation, response to wounding, transmembrane transport, water channel activity, water transport"

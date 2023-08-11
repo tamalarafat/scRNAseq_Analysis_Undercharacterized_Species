@@ -1,0 +1,2 @@
+"gene_ID","p_val","avg_log2FC","pct.1","pct.2","p_val_adj","AT_ID","TF","TF_family","Gene_code_name","Gene_functions"
+"Chir01Ox-b14670.2",0,0.53266234527036,0.89,0.563,0,"AT1G14600","Yes","G2-like","AT1G14600.1","DNA-binding transcription factor activity, nucleus, regulation of DNA-templated transcription"

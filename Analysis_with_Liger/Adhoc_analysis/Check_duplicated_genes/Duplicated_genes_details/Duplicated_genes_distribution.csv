@@ -1,0 +1,6 @@
+"Chr_genes","gene_ID","cluster_ID_max_one","cluster_ID_max_two","cluster_ID_max_three","cell_count_max_one","cell_count_max_two","cell_count_max_three"
+"Chir01Ox_b00010.2_T002","Chir01Ox-b00010.2","0","8","4","2186","410","51"
+"Chir01Ox_b00020.2_T002","Chir01Ox-b00020.2","0","8","5","120","43","24"
+"Chir01Ox_b00200.2_T001","Chir01Ox-b00200.2","10","16","17","37","14","13"
+"Chir01Ox_b00570.2_T001","Chir01Ox-b00570.2","0","1","7","10","4","3"
+"Chir01Ox_b00190.2_T001","Chir01Ox-b00190.2","NA","NA","NA","NA","NA","NA"

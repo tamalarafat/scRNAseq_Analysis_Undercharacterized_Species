@@ -1,18 +1,58 @@
 # Load all the functions stored in scripts from the folder housing the scripts
-scripts_list <- list.files("~/Documents/Yasirs_projects/scExplorer/Functions", pattern = "*.R$", full.names = TRUE)
+scripts_list <- list.files("/home/ytamal2/Documents/2023/PhD_projects_Yasir/scExplorer/Functions", pattern = "*.R$", full.names = TRUE)
 sapply(scripts_list, source, .GlobalEnv)
 
 ## Define the colors
 grp_col = c("#FD6467", "#00A08A", "#F98400", "#046C9A", "#075149FF", "#FFA319FF", "#00BF81", "#767676FF", "#FD8CC1FF")
 
 # Load the seurat object
-load("~/Documents/Beginning_of_a_compendium/Analysis_of_single_species_Cardamine/Analysis_with_Liger/Analysis_objects/Liger_objects_with_CC/seurat_object_of_K_44_Without_GEP20_22.RData")
+load("/netscratch/dep_tsiantis/grp_laurent/tamal/2023/Analyses/Analysis_of_single_species_Cardamine/Liger_Analyses/Liger_analysis_strategy_1/On_coefficient/Analysis_of_WT_Cardamine/Remove_rep_specific_GEP20_and_22/Select_UMAP/UMAP_Selected/seurat_object_of_K_44_Without_GEP20_22.RData")
 
-# Markers from cluster DEGs
-# Dir - containing the DEG files
-DEG_dir = "/home/yasir/Documents/Chapter1/Remove_rep_specific_GEP20_and_22/Differentially_expressed_genes/DEGs_of_each_cluster/DEG_DEtest_wilcox"
+# Path to the DEG files - differentially genes usign the "Findmarkers" function (Seurat) per cluster
+DEG_dir = "/home/ytamal2/Documents/2023/PhD_projects_Yasir/Analysis_of_single_species_Cardamine/Analysis_with_Liger/08_Analysis_02_after_controlling_for_batch_effects/Analysis_outputs/Differentially_expressed_genes/DEGs_of_each_cluster/DEG_DEtest_wilcox"
 
-specific_markers_list = specific_marker_finder(DEG_file_dir = DEG_dir, pct_detection = 0.1, pct_diff = 0.3)
+specific_markers_list = specific_marker_finder(DEG_file_dir = DEG_dir, pct_detection = 0.1, pct_diff = 0.3, return_markers_list = TRUE)
+
+
+# This does not work - if user provides the file location.
+# Needs addition.
+cluster_15 = "/home/ytamal2/Documents/2023/PhD_projects_Yasir/Analysis_of_single_species_Cardamine/Analysis_with_Liger/08_Analysis_02_after_controlling_for_batch_effects/Analysis_outputs/Differentially_expressed_genes/DEGs_of_each_cluster/DEG_DEtest_wilcox/Cluster_15_DEGs.RData"
+
+SM_CL15 = specific_marker_finder(DEG_file_dir = cluster_15, pct_detection = 0.1, pct_diff = 0.3, return_markers_list = TRUE)
+
+
+# This works - if user provides the loaded DEG file. But the name of the item in the list is defined by the function.
+# Needs modification.
+cluster_15 = loadRData("/home/ytamal2/Documents/2023/PhD_projects_Yasir/Analysis_of_single_species_Cardamine/Analysis_with_Liger/08_Analysis_02_after_controlling_for_batch_effects/Analysis_outputs/Differentially_expressed_genes/DEGs_of_each_cluster/DEG_DEtest_wilcox/Cluster_15_DEGs.RData")
+
+SM_CL15 = specific_marker_finder(DEG_file_dir = cluster_15, pct_detection = 0.1, pct_diff = 0.3, return_markers_list = TRUE)
+
+
+# If user wants a single element of the list - can get
+# Needs addition. Simply add an argument and extract from the list
+
+# Particular genes set of interest -  could be TFs or other categories
+specify_gene_ID = NULL
+
+# Name of the column to be added into the table. If user provides a list of genes, this column will indicate the category -Yes or No 
+incorporate_column_name = NULL
+
+# Incorporate this information
+# Find markers only from the given set of genes or from the given full set of differentially expressed genes or for both groups
+
+
+# Check if any cluster ID is provided or not. If provided, use the specified ID. If not, get all the cluster IDs and go over each ID.
+if (missing(cluster_ID)){
+  cluster_ID = levels(Idents(integrated.data))
+}
+
+
+# Inside the loop now
+
+# Narrow the list of the differentially expressed genes by finding the cluster specific markers
+
+Cluster_marker = specific_marker_finder(DEG_file_dir = DEG_dir, file_name_pattern = "Cluster_", pct_detection = 0.1, pct_diff = 0.3, return_markers_list = TRUE, cluster_ID = 15)
+
 
 # Cluster 15 marker
 

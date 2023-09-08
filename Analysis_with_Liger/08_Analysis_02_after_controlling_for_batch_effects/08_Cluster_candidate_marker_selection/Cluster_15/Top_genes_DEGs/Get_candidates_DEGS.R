@@ -8,6 +8,9 @@ grp_col = c("#FD6467", "#00A08A", "#F98400", "#046C9A", "#075149FF", "#FFA319FF"
 # Load the seurat object
 load("/netscratch/dep_tsiantis/grp_laurent/tamal/2023/Analyses/Analysis_of_single_species_Cardamine/Liger_Analyses/Liger_analysis_strategy_1/On_coefficient/Analysis_of_WT_Cardamine/Remove_rep_specific_GEP20_and_22/Select_UMAP/UMAP_Selected/seurat_object_of_K_44_Without_GEP20_22.RData")
 
+# Load the TFs list 
+ch_TFs = read.delim("/home/ytamal2/Documents/2023/PhD_projects_Yasir/Analysis_of_single_species_Cardamine/Analysis_with_Liger/Analysis_objects/Annotation_files/TFs_list/cardamine_TF_IDs.txt", header = FALSE)[, 1]
+
 # Path to the DEG files - differentially genes usign the "Findmarkers" function (Seurat) per cluster
 DEG_dir = "/home/ytamal2/Documents/2023/PhD_projects_Yasir/Analysis_of_single_species_Cardamine/Analysis_with_Liger/08_Analysis_02_after_controlling_for_batch_effects/Analysis_outputs/Differentially_expressed_genes/DEGs_of_each_cluster/DEG_DEtest_wilcox"
 
@@ -22,6 +25,11 @@ specify_gene_ID = NULL
 incorporate_column_name = NULL
 
 # include_both_categories
+from_specified_list = TRUE
+
+from_non_specified_list = TRUE
+
+combine_categories = FALSE
 
 # Check if any cluster ID is provided or not. If provided, use the specified ID. If not, get all the cluster IDs and go over each ID.
 if (missing(cluster_ID)){
@@ -35,8 +43,7 @@ specific_markers_list = specific_marker_finder(DEG_file_dir = DEG_dir, file_name
 
 # If it's a DEG file, get the specific marker for that file
 
-
-
+specify_gene_ID = ch_TFs
 
 
 # Inside the loop now
@@ -44,38 +51,122 @@ specific_markers_list = specific_marker_finder(DEG_file_dir = DEG_dir, file_name
 # What ever the DEG file is put them in a list and go over the list item
 
 # Get the markers file - diffentially expressed genes file
-Cluster_marker = Cluster_marker[[1]]
+cluster_marker = specific_markers_list[[1]]
 
+# create an empty list to store the files
+temp_list = list()
 
+if (!is.null(specify_gene_ID)) {
+  
+  ## This part for the specified genes set
+  
+  # First, subset the marker file with the specified gene IDs
+  specified_cluster_marker = cluster_marker[cluster_marker$gene_ID %in% specify_gene_ID, ]
+  
+  # Find candidate markers for the specified genes
+  specified_cluster_candidates = select_candidates(specified_cluster_marker)
+  
+  # Add the source of the markers
+  specified_cluster_candidates$source = "DEGs"
+  
+  # Check if user wants to add the information of the category to the table. If not missing add the column with the given name.
+  if (!is.null(incorporate_column_name)) {
+    specified_cluster_candidates[[incorporate_column_name]] <- "Yes"
+  }
+  
+  
+  ## This part for the remaining genes
+  
+  # First, subset the marker file with the specified gene IDs
+  non_specified_cluster_marker = cluster_marker[!cluster_marker$gene_ID %in% specify_gene_ID, ]
+  
+  # Find candidate markers for the specified genes
+  non_specified_cluster_candidates = select_candidates(non_specified_cluster_marker)
+  
+  # Add the source of the markers
+  specified_cluster_candidates$source = "DEGs"
+  
+  # Check if user wants to add the information of the category to the table. If not missing add the column with the given name.
+  if (!is.null(incorporate_column_name)) {
+    non_specified_cluster_candidates[[incorporate_column_name]] <- "NA"
+  }
+  
+  
+  ## Now check the requirements of the user.
+  
+  # If user wants to combine both categories
+  if (combine_categories == TRUE) {
+    candidate_markers = rbind.data.frame(specified_cluster_candidates, non_specified_cluster_candidates)
+    
+    # Add the candidates data table to the list
+    temp_list[["candidate_markers"]] <- candidate_markers
+    
+  }
+  
+  # If user wants to find candidates only from the specified list of genes
+  else if (from_specified_list == TRUE) {
+    
+    # Add the candidates data table to the list
+    temp_list[["candidate_markers"]] <- specified_cluster_candidates
+    
+  }
+  
+  # If user wants to find candidates only from the specified list of genes
+  else if (from_non_specified_list == TRUE) {
+    
+    # Add the candidates data table to the list
+    temp_list[["candidate_markers"]] <- non_specified_cluster_marker
+    
+  }
+} else {
+  # Find candidate markers for the specified genes
+  candidate_markers = select_candidates(cluster_marker)
+  
+  # Add the source of the markers
+  candidate_markers$source = "DEGs"
+  
+  # Add the candidates data table to the list
+  temp_list[["candidate_markers"]] <- candidate_markers
+}
 
-# Let's define the candidates selection criteria
-Cluster_marker = Cluster_marker[order(Cluster_marker$pct.2, decreasing = FALSE), ]
-
-if (nrow(Cluster_marker) == 0) {
-  print("No TFs")} else if (nrow(Cluster_marker) <= find_candidates & nrow(Cluster_marker) != 0){
-    Cluster_marker = Cluster_marker
-  } else {
-    if (nrow(Cluster_marker[Cluster_marker$avg_log2FC >= 1,]) < find_candidates & nrow(Cluster_marker[Cluster_marker$avg_log2FC >= 1,]) > 0){
-      subset1 = Cluster_marker[Cluster_marker$avg_log2FC >= 1,]
-      subset2 = Cluster_marker[Cluster_marker$avg_log2FC < 1,]
-      subset2 = subset2[order(subset2$avg_log2FC, decreasing = TRUE), ]
-      
-      if (nrow(subset2) <= (find_candidates - nrow(subset1))) {
-        Cluster_marker = rbind.data.frame(subset1, subset2)
-      } else {
-        subset2 = head(subset2, (find_candidates - nrow(subset1)))
-        Cluster_marker = rbind.data.frame(subset1, subset2)
+select_candidates <- function(marker_file) {
+  
+  # Let's define the candidates selection criteria
+  marker_file = marker_file[order(marker_file$pct.2, decreasing = FALSE), ]
+  
+  if (nrow(marker_file) == 0) {
+    print("No TFs")} 
+  
+  else if (nrow(marker_file) <= find_candidates & nrow(marker_file) != 0){
+      marker_file = marker_file
+    } 
+  
+  else {
+      if (nrow(marker_file[marker_file$avg_log2FC >= 1,]) < find_candidates & nrow(marker_file[marker_file$avg_log2FC >= 1,]) > 0){
+        subset1 = marker_file[marker_file$avg_log2FC >= 1,]
+        subset2 = marker_file[marker_file$avg_log2FC < 1,]
+        subset2 = subset2[order(subset2$avg_log2FC, decreasing = TRUE), ]
+        
+        if (nrow(subset2) <= (find_candidates - nrow(subset1))) {
+          marker_file = rbind.data.frame(subset1, subset2)
+        } else {
+          subset2 = head(subset2, (find_candidates - nrow(subset1)))
+          marker_file = rbind.data.frame(subset1, subset2)
+        }
+      }
+      else if (nrow(marker_file[marker_file$avg_log2FC >= 1,]) == 0){
+        marker_file = marker_file[order(marker_file$avg_log2FC, decreasing = TRUE), ]
+        marker_file = marker_file[c(1:find_candidates), ]
+      }
+      else {
+        marker_file = marker_file[marker_file$avg_log2FC >= 1, ]
+        marker_file = marker_file[c(1:find_candidates), ]
       }
     }
-    else if (nrow(Cluster_marker[Cluster_marker$avg_log2FC >= 1,]) == 0){
-      Cluster_marker = Cluster_marker[order(Cluster_marker$avg_log2FC, decreasing = TRUE), ]
-      Cluster_marker = Cluster_marker[c(1:find_candidates), ]
-    }
-    else {
-      Cluster_marker = Cluster_marker[Cluster_marker$avg_log2FC >= 1, ]
-      Cluster_marker = Cluster_marker[c(1:find_candidates), ]
-    }
-  }
+  
+}
+
+
 
 
 Cluster_marker$source = "DEGs"

@@ -14,6 +14,43 @@ ch_TFs = read.delim("/home/ytamal2/Documents/2023/PhD_projects_Yasir/Analysis_of
 # Path to the DEG files - differentially genes usign the "Findmarkers" function (Seurat) per cluster
 DEG_dir = "/home/ytamal2/Documents/2023/PhD_projects_Yasir/Analysis_of_single_species_Cardamine/Analysis_with_Liger/08_Analysis_02_after_controlling_for_batch_effects/Analysis_outputs/Differentially_expressed_genes/DEGs_of_each_cluster/DEG_DEtest_wilcox"
 
+# Check if the input GEP_genes is a path with the file name. Only .txt file is allowed
+DEG_file = "/home/ytamal2/Documents/2023/PhD_projects_Yasir/Analysis_of_single_species_Cardamine/Analysis_with_Liger/08_Analysis_02_after_controlling_for_batch_effects/Analysis_outputs/Differentially_expressed_genes/DEGs_of_each_cluster/DEG_DEtest_wilcox"
+
+file_name_pattern = "Cluster"
+
+if (is.character(DEG_file)) {
+  
+  if (file_test("-f", DEG_file)) {
+    
+    # 
+    DEG_files = str_sort(list.files(DEG_file, pattern = file_name_pattern), numeric = TRUE)
+    
+    for (i in c(1:length(DEG_files))){
+      
+      SM = loadRData(str_c(DEG_file_dir, "/", DEG_files[i]))
+      
+      temp_deg_list[[i]] <- SM
+      
+      names(temp_deg_list)[i] <- str_c("Cluster_", parse_number(DEG_files[i]), "_SM")
+    }
+    # Read the txt file and add colnames
+    GEP_genes = read.delim(GEP_genes, header = FALSE, col.names = "gene_ID")
+    
+    # Get the genes and create a list with the gene IDs
+    GEP_list = list(GEP_genes = GEP_genes$gene_ID)
+  } 
+  
+}
+
+
+# Check if the input GEP_genes is a vector containing the gene IDs
+else {
+  
+  # create a list with the gene IDs
+  GEP_list = list(GEP_genes = GEP_genes)
+}
+
 cluster_ID = c(15, 16)
 
 find_candidates = 10

@@ -1,5 +1,5 @@
 # Load all the functions stored in scripts from the folder housing the scripts
-scripts_list <- list.files("/home/ytamal2/Documents/2023/PhD_projects_Yasir/scExplorer/Functions", pattern = "*.R$", full.names = TRUE)
+scripts_list <- list.files("~/Documents/2023/PhD_projects_Yasir/scExplorer/Functions", pattern = "*.R$", full.names = TRUE)
 sapply(scripts_list, source, .GlobalEnv)
 
 ## Define the colors
@@ -19,37 +19,62 @@ DEG_file = "/home/ytamal2/Documents/2023/PhD_projects_Yasir/Analysis_of_single_s
 
 file_name_pattern = "Cluster"
 
+cluster_IDs = 15
+
+
+# Create an empty list to store the deg files
+temp_deg_list = list()
+
 if (is.character(DEG_file)) {
   
-  if (file_test("-f", DEG_file)) {
+  if (!file_test("-f", DEG_file)) {
     
     # 
-    DEG_files = str_sort(list.files(DEG_file, pattern = file_name_pattern), numeric = TRUE)
+    file_names = str_sort(list.files(DEG_file, pattern = file_name_pattern), numeric = TRUE)
     
-    for (i in c(1:length(DEG_files))){
+    for (i in c(1:length(file_names))){
       
-      SM = loadRData(str_c(DEG_file_dir, "/", DEG_files[i]))
+      marker_file = loadRData(str_c(DEG_file, "/", file_names[i]))
       
-      temp_deg_list[[i]] <- SM
+      temp_deg_list[[i]] <- marker_file
       
-      names(temp_deg_list)[i] <- str_c("Cluster_", parse_number(DEG_files[i]), "_SM")
+      if (grepl("[[:digit:]]", file_names[i]) != TRUE){
+        names(temp_deg_list)[i] <- sub("(.*)\\.RData$", "\\1", file_names[i])
+      }
+      
+      else {
+        names(temp_deg_list)[i] <- str_c("cluster_", parse_number(file_names[i]), "_degs")
+      }
     }
-    # Read the txt file and add colnames
-    GEP_genes = read.delim(GEP_genes, header = FALSE, col.names = "gene_ID")
+  }
+  
+  else {
+    marker_file = loadRData(DEG_file)
     
-    # Get the genes and create a list with the gene IDs
-    GEP_list = list(GEP_genes = GEP_genes$gene_ID)
-  } 
+    temp_deg_list[[1]] <- marker_file
+    
+    file_names = basename(DEG_file)
+    
+    if (grepl("[[:digit:]]", file_names) != TRUE){
+      names(temp_deg_list)[1] <- sub("(.*)\\.RData$", "\\1", file_names)
+    }
+    
+    else {
+      names(temp_deg_list)[i] <- str_c("cluster_", parse_number(file_names), "_degs")
+    }
+  }
+} else {
+  if (!is.list(temp_deg_list)){
+    temp_deg_list[[1]] <- DEG_file
+    
+    names(temp_deg_list)[1] <- str_c("cluster_", cluster_IDs, "_degs")
+  }
   
+  else {
+    temp_deg_list = DEG_file
+  }
 }
 
-
-# Check if the input GEP_genes is a vector containing the gene IDs
-else {
-  
-  # create a list with the gene IDs
-  GEP_list = list(GEP_genes = GEP_genes)
-}
 
 cluster_ID = c(15, 16)
 

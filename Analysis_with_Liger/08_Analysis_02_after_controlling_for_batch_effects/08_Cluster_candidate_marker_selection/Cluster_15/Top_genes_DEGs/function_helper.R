@@ -1,5 +1,15 @@
 # Get GEPs from the generated Basis file - containing grouping of the genes
-candidate_markers_DEGs <- function(seurat_object, 
+candidate_markers_DEGs <- function(DEG_file,
+                                   file_name_pattern = "Cluster",
+                                   pct_detection = 0.1,
+                                   pct_diff = 0.3,
+                                   find_candidates = 10,
+                                   cluster_ID = NULL,
+                                   specify_gene_ID = NULL,
+                                   incorporate_column_name = NULL,
+                                   from_specified_list = FALSE,
+                                   from_non_specified_list = FALSE,
+                                   combine_categories = FALSE,
                                    GEP_genes = NULL, 
                                    GEP_IDs = NULL, 
                                    cluster_ID,
@@ -79,89 +89,154 @@ candidate_markers_DEGs <- function(seurat_object,
       }
     }
     
+    marker_file$source = "DEGs"
+    
+    candidate_subset = candidate_subset[order(candidate_subset$pct.2, decreasing = FALSE), ]
+    
+    write.csv(Cluster_marker, str_c("Cluster_", target_ID, "_top_10_TFs.csv"), row.names = FALSE)
+    
+  }
+  
+  # Create an empty list to store the deg files
+  temp_deg_list = list()
+  
+  if (is.character(DEG_file)) {
+    
+    if (!file_test("-f", DEG_file)) {
+      
+      # 
+      file_names = str_sort(list.files(DEG_file, pattern = file_name_pattern), numeric = TRUE)
+      
+      for (i in c(1:length(file_names))){
+        
+        marker_file = loadRData(str_c(DEG_file, "/", file_names[i]))
+        
+        temp_deg_list[[i]] <- marker_file
+        
+        if (grepl("[[:digit:]]", file_names[i]) != TRUE){
+          names(temp_deg_list)[i] <- sub("(.*)\\.RData$", "\\1", file_names[i])
+        }
+        
+        else {
+          names(temp_deg_list)[i] <- str_c("cluster_", parse_number(file_names[i]), "_degs")
+        }
+      }
+    }
+    
+    else {
+      marker_file = loadRData(DEG_file)
+      
+      temp_deg_list[[1]] <- marker_file
+      
+      file_names = basename(DEG_file)
+      
+      if (grepl("[[:digit:]]", file_names) != TRUE){
+        names(temp_deg_list)[1] <- sub("(.*)\\.RData$", "\\1", file_names)
+      }
+      
+      else {
+        names(temp_deg_list)[i] <- str_c("cluster_", parse_number(file_names), "_degs")
+      }
+    }
+  } else {
+    if (!is.list(temp_deg_list)){
+      temp_deg_list[[1]] <- DEG_file
+      
+      names(temp_deg_list)[1] <- str_c("cluster_", cluster_IDs, "_degs")
+    }
+    
+    else {
+      temp_deg_list = DEG_file
+    }
   }
   
   
-  # create an empty list to store the files
+  # create an empty list to store the candidate markers files
   temp_list = list()
   
   
-  # Check if user specified a set of genes to look for candidates from the DEGs file
-  if (!is.null(specify_gene_ID)) {
+  for (i in c(1:length(temp_deg_list))) {
     
-    ## This part for the specified genes set
+    # Get cluster specific markers for the cell clusters
+    cluster_marker = specific_marker_finder(DEG_file_dir = temp_deg_list[[i]], pct_detection = pct_detection, pct_diff = pct_diff, return_markers_list = TRUE)[[1]]
     
-    # First, subset the marker file with the specified gene IDs
-    specified_cluster_marker = cluster_marker[cluster_marker$gene_ID %in% specify_gene_ID, ]
+    # Check if user specified a set of genes to look for candidates from the DEGs file
+    if (!is.null(specify_gene_ID)) {
+      
+      ## This part for the specified genes set
+      
+      # First, subset the marker file with the specified gene IDs
+      specified_cluster_marker = cluster_marker[cluster_marker$gene_ID %in% specify_gene_ID, ]
+      
+      # Find candidate markers for the specified genes
+      specified_cluster_candidates = select_candidates(specified_cluster_marker)
+      
+      # Add the source of the markers
+      specified_cluster_candidates$source = "DEGs"
+      
+      # Check if user wants to add the information of the category to the table. If not missing add the column with the given name.
+      if (!is.null(incorporate_column_name)) {
+        specified_cluster_candidates[[incorporate_column_name]] <- "Yes"
+      }
+      
+      
+      ## This part for the remaining genes
+      
+      # First, subset the marker file with the specified gene IDs
+      non_specified_cluster_marker = cluster_marker[!cluster_marker$gene_ID %in% specify_gene_ID, ]
+      
+      # Find candidate markers for the specified genes
+      non_specified_cluster_candidates = select_candidates(non_specified_cluster_marker)
+      
+      # Add the source of the markers
+      specified_cluster_candidates$source = "DEGs"
+      
+      # Check if user wants to add the information of the category to the table. If not missing add the column with the given name.
+      if (!is.null(incorporate_column_name)) {
+        non_specified_cluster_candidates[[incorporate_column_name]] <- "NA"
+      }
+      
+      
+      ## Now check the requirements of the user.
+      
+      # If user wants to combine both categories
+      if (combine_categories == TRUE) {
+        candidate_markers = rbind.data.frame(specified_cluster_candidates, non_specified_cluster_candidates)
+        
+        # Add the candidates data table to the list
+        temp_list[["candidate_markers"]] <- candidate_markers
+        
+      }
+      
+      # If user wants to find candidates only from the specified list of genes
+      else if (from_specified_list == TRUE) {
+        
+        # Add the candidates data table to the list
+        temp_list[["candidate_markers"]] <- specified_cluster_candidates
+        
+      }
+      
+      # If user wants to find candidates only from the specified list of genes
+      else if (from_non_specified_list == TRUE) {
+        
+        # Add the candidates data table to the list
+        temp_list[["candidate_markers"]] <- non_specified_cluster_marker
+        
+      }
+    } 
     
-    # Find candidate markers for the specified genes
-    specified_cluster_candidates = select_candidates(specified_cluster_marker)
-    
-    # Add the source of the markers
-    specified_cluster_candidates$source = "DEGs"
-    
-    # Check if user wants to add the information of the category to the table. If not missing add the column with the given name.
-    if (!is.null(incorporate_column_name)) {
-      specified_cluster_candidates[[incorporate_column_name]] <- "Yes"
-    }
-    
-    
-    ## This part for the remaining genes
-    
-    # First, subset the marker file with the specified gene IDs
-    non_specified_cluster_marker = cluster_marker[!cluster_marker$gene_ID %in% specify_gene_ID, ]
-    
-    # Find candidate markers for the specified genes
-    non_specified_cluster_candidates = select_candidates(non_specified_cluster_marker)
-    
-    # Add the source of the markers
-    specified_cluster_candidates$source = "DEGs"
-    
-    # Check if user wants to add the information of the category to the table. If not missing add the column with the given name.
-    if (!is.null(incorporate_column_name)) {
-      non_specified_cluster_candidates[[incorporate_column_name]] <- "NA"
-    }
-    
-    
-    ## Now check the requirements of the user.
-    
-    # If user wants to combine both categories
-    if (combine_categories == TRUE) {
-      candidate_markers = rbind.data.frame(specified_cluster_candidates, non_specified_cluster_candidates)
+    else {
+      # Find candidate markers for the specified genes
+      candidate_markers = select_candidates(cluster_marker)
+      
+      # Add the source of the markers
+      candidate_markers$source = "DEGs"
       
       # Add the candidates data table to the list
       temp_list[["candidate_markers"]] <- candidate_markers
-      
     }
     
-    # If user wants to find candidates only from the specified list of genes
-    else if (from_specified_list == TRUE) {
-      
-      # Add the candidates data table to the list
-      temp_list[["candidate_markers"]] <- specified_cluster_candidates
-      
-    }
-    
-    # If user wants to find candidates only from the specified list of genes
-    else if (from_non_specified_list == TRUE) {
-      
-      # Add the candidates data table to the list
-      temp_list[["candidate_markers"]] <- non_specified_cluster_marker
-      
-    }
-  } 
-  
-  else {
-    # Find candidate markers for the specified genes
-    candidate_markers = select_candidates(cluster_marker)
-    
-    # Add the source of the markers
-    candidate_markers$source = "DEGs"
-    
-    # Add the candidates data table to the list
-    temp_list[["candidate_markers"]] <- candidate_markers
   }
-  
 
 }
 

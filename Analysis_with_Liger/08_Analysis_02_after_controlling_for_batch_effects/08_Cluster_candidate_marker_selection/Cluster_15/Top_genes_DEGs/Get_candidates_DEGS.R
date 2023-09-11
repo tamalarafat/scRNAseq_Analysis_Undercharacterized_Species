@@ -21,6 +21,8 @@ file_name_pattern = "Cluster"
 
 cluster_IDs = 15
 
+# Extract all the columns in the DEG file containing pct.2 information
+temp_all_pct2 = markers_description[ , str_detect(colnames(markers_description), pattern = "pct.2")]
 
 # Create an empty list to store the deg files
 temp_deg_list = list()

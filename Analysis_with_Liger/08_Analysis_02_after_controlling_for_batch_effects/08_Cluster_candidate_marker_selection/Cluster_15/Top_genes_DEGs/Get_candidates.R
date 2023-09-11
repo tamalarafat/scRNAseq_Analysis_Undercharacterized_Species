@@ -1,5 +1,5 @@
 # Load all the functions stored in scripts from the folder housing the scripts
-scripts_list <- list.files("/home/ytamal2/Documents/2023/PhD_projects_Yasir/scExplorer/Functions", pattern = "*.R$", full.names = TRUE)
+scripts_list <- list.files("/home/yasir/Documents/Projects_Yasir/scExplorer/Functions", pattern = "*.R$", full.names = TRUE)
 sapply(scripts_list, source, .GlobalEnv)
 
 ## Define the colors

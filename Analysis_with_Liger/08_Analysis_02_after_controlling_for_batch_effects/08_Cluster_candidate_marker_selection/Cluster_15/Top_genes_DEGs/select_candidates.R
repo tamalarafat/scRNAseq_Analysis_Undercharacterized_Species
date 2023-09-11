@@ -2,6 +2,11 @@ select_candidates <- function(marker_file, find_candidates = 10) {
   
   n_pct = colnames(marker_file)[str_detect(colnames(marker_file), pattern = "pct.2")]
   
+  if (!"gene_ID" %in% colnames(cluster_degs)){
+    marker_file$gene_ID = rownames(marker_file)
+  }
+  
+  
   if (length(n_pct) == 1){
     # Let's define the candidates selection criteria
     marker_file = marker_file[order(marker_file[["pct.2"]], decreasing = FALSE), ]
@@ -85,4 +90,21 @@ select_candidates <- function(marker_file, find_candidates = 10) {
   return(marker_file)
 }
 
-c = select_candidates(marker_file = b, find_candidates = 10)
+
+# Load all the functions stored in scripts from the folder housing the scripts
+scripts_list <- list.files("~/Documents/2023/PhD_projects_Yasir/scExplorer/Functions", pattern = "*.R$", full.names = TRUE)
+sapply(scripts_list, source, .GlobalEnv)
+
+## Define the colors
+grp_col = c("#FD6467", "#00A08A", "#F98400", "#046C9A", "#075149FF", "#FFA319FF", "#00BF81", "#767676FF", "#FD8CC1FF")
+
+conserved_marker = loadRData("/netscratch/dep_tsiantis/grp_laurent/tamal/2023/Beginning_of_a_compendium/Thesis_PhD/Chap_2/Liger_analysis_with_CC/Differentially_expressed_genes/Conserved_marker_grouped_by_Species/Conserved_markers_DEtest_wilcox/Cluster_15_positive_conserved_marker.RData")
+
+cluster_degs = loadRData("/home/ytamal2/Documents/2023/PhD_projects_Yasir/Analysis_of_single_species_Cardamine/Analysis_with_Liger/08_Analysis_02_after_controlling_for_batch_effects/Analysis_outputs/Differentially_expressed_genes/DEGs_of_each_cluster/DEG_DEtest_wilcox/Cluster_15_DEGs.RData")
+
+scm = specific_conserved_marker_finder(DEG_file = conserved_marker, pct.difference = 0.3, include.pct.difference = TRUE, store_outputs = FALSE)
+cm = select_candidates(marker_file = conserved_marker, find_candidates = 10)
+
+cm2 = select_candidates(marker_file = scm, find_candidates = 10)
+
+sm = select_candidates(marker_file = cluster_degs,find_candidates = 10)

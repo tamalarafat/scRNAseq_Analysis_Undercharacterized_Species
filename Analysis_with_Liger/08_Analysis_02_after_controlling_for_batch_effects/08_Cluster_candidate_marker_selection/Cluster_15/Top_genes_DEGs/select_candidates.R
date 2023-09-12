@@ -83,9 +83,9 @@ select_candidates <- function(marker_file, find_candidates = 10) {
         marker_file = marker_file[c(1:find_candidates), ]
       }
     }
-    
-    marker_file$source = "DEGs"
   }
+  
+  marker_file$source = "DEGs"
   
   return(marker_file)
 }
@@ -98,13 +98,16 @@ sapply(scripts_list, source, .GlobalEnv)
 ## Define the colors
 grp_col = c("#FD6467", "#00A08A", "#F98400", "#046C9A", "#075149FF", "#FFA319FF", "#00BF81", "#767676FF", "#FD8CC1FF")
 
-conserved_marker = loadRData("/netscratch/dep_tsiantis/grp_laurent/tamal/2023/Beginning_of_a_compendium/Thesis_PhD/Chap_2/Liger_analysis_with_CC/Differentially_expressed_genes/Conserved_marker_grouped_by_Species/Conserved_markers_DEtest_wilcox/Cluster_15_positive_conserved_marker.RData")
+conserved_marker = loadRData("/home/yasir/Documents/Projects_Yasir/comparative_study_of_two_species/Analysis_with_Liger/07_Analysis_01_initial_downstream_analysis/Analysis_outputs/Differentially_expressed_genes/Conserved_DEGs_grouped_by_Species/Conserved_markers_DEtest_wilcox/Cluster_15_positive_conserved_marker.RData")
 
-cluster_degs = loadRData("/home/ytamal2/Documents/2023/PhD_projects_Yasir/Analysis_of_single_species_Cardamine/Analysis_with_Liger/08_Analysis_02_after_controlling_for_batch_effects/Analysis_outputs/Differentially_expressed_genes/DEGs_of_each_cluster/DEG_DEtest_wilcox/Cluster_15_DEGs.RData")
+cluster_degs = loadRData("/home/yasir/Documents/Projects_Yasir/Analysis_of_single_species_Cardamine/Analysis_with_Liger/08_Analysis_02_after_controlling_for_batch_effects/Analysis_outputs/Differentially_expressed_genes/DEGs_of_each_cluster/DEG_DEtest_wilcox/Cluster_15_DEGs.RData")
 
-scm = specific_conserved_marker_finder(DEG_file = conserved_marker, pct.difference = 0.3, include.pct.difference = TRUE, store_outputs = FALSE)
-cm = select_candidates(marker_file = conserved_marker, find_candidates = 10)
+scm = specific_conserved_marker_finder(DEG_file = conserved_marker, pct_diff = 0.3, include_pct_diff = TRUE, store_outputs = FALSE)
 
-cm2 = select_candidates(marker_file = scm, find_candidates = 10)
+sm = specific_marker_finder(DEG_file_dir = cluster_degs, max_pct2_detection = 0.1, pct_diff = 0.3, store_outputs = FALSE)
 
-sm = select_candidates(marker_file = cluster_degs,find_candidates = 10)
+ccm = select_candidates(marker_file = scm, find_candidates = 10)
+
+csm = select_candidates(marker_file = sm, find_candidates = 10)
+
+

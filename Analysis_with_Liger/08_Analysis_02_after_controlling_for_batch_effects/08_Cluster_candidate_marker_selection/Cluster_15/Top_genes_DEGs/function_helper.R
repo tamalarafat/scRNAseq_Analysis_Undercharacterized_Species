@@ -55,7 +55,7 @@ candidate_markers_DEGs <- function(DEG_file,
   # This part will take the argument input and get the genes of the GEP or GEPs and assign them into a list that will be used later to iterate over the GEP IDs.
   
   # A nested function to select candidates from the markers file
-  select_candidates <- function(marker_file, find_candidates = 10) {
+  select_candidates <- function(marker_file, find_candidates = find_candidates) {
     
     n_pct = colnames(marker_file)[str_detect(colnames(marker_file), pattern = "pct.2")]
     
@@ -140,9 +140,9 @@ candidate_markers_DEGs <- function(DEG_file,
           marker_file = marker_file[c(1:find_candidates), ]
         }
       }
-      
-      marker_file$source = "DEGs"
     }
+    
+    marker_file$source = "DEGs"
     
     return(marker_file)
   }

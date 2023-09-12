@@ -110,4 +110,14 @@ ccm = select_candidates(marker_file = scm, find_candidates = 10)
 
 csm = select_candidates(marker_file = sm, find_candidates = 10)
 
+# Path to the DEG files - differentially genes usign the "Findmarkers" function (Seurat) per cluster
+DEG_dir = "/home/ytamal2/Documents/2023/PhD_projects_Yasir/Analysis_of_single_species_Cardamine/Analysis_with_Liger/08_Analysis_02_after_controlling_for_batch_effects/Analysis_outputs/Differentially_expressed_genes/DEGs_of_each_cluster/DEG_DEtest_wilcox"
 
+candidate_markers_DEGs(DEG_file = DEG_dir, file_name_pattern = "Cluster_", max_pct2_detection = 0.1, pct_diff = 0.3, include_pct_diff = TRUE, find_candidates = 10, store_outputs = TRUE)
+
+# Load the TFs list 
+ch_TFs = read.delim("/home/ytamal2/Documents/2023/PhD_projects_Yasir/Analysis_of_single_species_Cardamine/Analysis_with_Liger/Analysis_objects/Annotation_files/TFs_list/cardamine_TF_IDs.txt", header = FALSE)[, 1]
+
+ml = candidate_markers_DEGs(DEG_file = DEG_dir, file_name_pattern = "Cluster_", max_pct2_detection = 0.1, pct_diff = 0.3, include_pct_diff = TRUE, find_candidates = 10, store_outputs = FALSE, specify_gene_ID = ch_TFs, incorporate_column_name = "TF", combine_categories = TRUE)
+
+ml_15 = candidate_markers_DEGs(DEG_file = DEG_dir, file_name_pattern = "Cluster_", max_pct2_detection = 0.1, pct_diff = 0.3, include_pct_diff = TRUE, find_candidates = 10, store_outputs = FALSE, specify_gene_ID = ch_TFs, incorporate_column_name = "TF", combine_categories = TRUE, cluster_ID = 15)

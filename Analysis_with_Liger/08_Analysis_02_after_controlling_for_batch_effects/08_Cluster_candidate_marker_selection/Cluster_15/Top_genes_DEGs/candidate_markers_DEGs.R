@@ -276,7 +276,6 @@ candidate_markers_DEGs <- function(DEG_file,
       }
       
       
-      
       ## Now check the requirements of the user.
       
       # If user wants to combine both categories
@@ -284,48 +283,53 @@ candidate_markers_DEGs <- function(DEG_file,
         
         # bind the rows of the two tables with row bind
         candidate_markers = rbind.data.frame(specified_cluster_candidates, non_specified_cluster_candidates)
-        
-        # Add the candidates data table to the list
-        temp_list[[i]] <- candidate_markers
-        
-        # Assign name to the list item
-        names(temp_list)[i] <- names(temp_deg_list)[i]
+
       }
       
       # If user wants to find candidates only from the specified list of genes
       else if (from_specified_list == TRUE) {
         
         # Add the candidates data table to the list
-        temp_list[[i]] <- specified_cluster_candidates
+        candidate_markers <- specified_cluster_candidates
         
-        # Assign name to the list item
-        names(temp_list)[i] <- names(temp_deg_list)[i]
       }
       
       # If user wants to find candidates only from the specified list of genes
       else if (from_non_specified_list == TRUE) {
         
         # Add the candidates data table to the list
-        temp_list[[i]] <- non_specified_cluster_marker
-        
-        # Assign name to the list item
-        names(temp_list)[i] <- names(temp_deg_list)[i]
+        candidate_markers <- non_specified_cluster_marker
+
       }
-    } 
+    }
     
     else {
+      
       # Find candidate markers for the specified genes
-      candidate_markers = select_candidates(marker_file = cluster_marker)
+      candidate_markers = select_candidates(marker_file = cluster_marker, number_of_candidates = find_candidates)
       
-      # Add the source of the markers
-      candidate_markers$source = "DEGs"
-      
-      # Add the candidates data table to the list
-      temp_list[[i]] <- candidate_markers
-      
-      # Assign name to the list item
-      names(temp_list)[i] <- names(temp_deg_list)[i]
     }
+    
+    
+    # Rearrange the rows of the data table based on the pct.2 criteria. This will be used to rank the genes (lowest pct.2 gets the highest rank)
+    
+    # If the table is a typical deg table of a single species or dataset
+    if (length(n_pct) == 1){
+      candidate_markers = candidate_markers[order(candidate_markers[["pct.2"]], decreasing = FALSE), ]
+    }
+    
+    # If the table is a conserved deg table of a two species or conditions
+    else if (length(n_pct) == 2) {
+      candidate_markers = candidate_markers[order(candidate_markers[, n_pct[1]], candidate_markers[, n_pct[2]]), ]
+    }
+    
+    candidate_markers$rank = c(1:nrow(candidate_markers))
+    
+    # Add the candidates data table to the list
+    temp_list[[i]] <- candidate_markers
+    
+    # Assign name to the list item
+    names(temp_list)[i] <- names(temp_deg_list)[i]
   }
   
   # Check if the user provided any cluster ID

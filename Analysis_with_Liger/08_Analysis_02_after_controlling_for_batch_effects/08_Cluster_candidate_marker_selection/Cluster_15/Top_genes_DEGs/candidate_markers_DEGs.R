@@ -176,7 +176,7 @@ candidate_markers_DEGs <- function(DEG_file,
       
       # else use the digit to name the list item
       else {
-        names(temp_deg_list)[i] <- str_c("cluster_", parse_number(file_names), "_degs")
+        names(temp_deg_list)[1] <- str_c("cluster_", parse_number(file_names), "_degs")
       }
     }
   } 
@@ -185,7 +185,7 @@ candidate_markers_DEGs <- function(DEG_file,
   else {
     
     # If the input is not a list but a data.frame
-    if (!is.list(temp_deg_list)){
+    if (!is.list(class(DEG_file))){
       temp_deg_list[[1]] <- DEG_file
       
       # Assign the name to the first item of the

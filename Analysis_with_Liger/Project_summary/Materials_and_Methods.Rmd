@@ -1,0 +1,79 @@
+---
+title: "<span style='font-size: 20pt; font-weight: bold;'>scRNA-seq analysis of single species - <i>Cardamine hirsuta</i>"
+subtitle: "<span style='font-weight: bold;'>Materials and Methods</span>"
+subtitle_font_size: 18pt
+author: "Yasir Arafat Tamal"
+date: "2023-09-15"
+output: 
+  html_document:
+        css: custom.css
+        fig_height: 9
+        fig_width: 11
+        toc: true
+        toc_float: false
+        number_sections: true
+editor_options: 
+  chunk_output_type: inline
+---
+
+<style>
+a:link {
+    color: red;
+}
+
+a:visited {
+    color: green;
+}
+
+ a:hover {
+    color: hotpink;
+}
+
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The materials, methods, and scripts used in this chapter can be found in this GitHub repository:
+(https://github.com/tamalarafat/Analysis_of_single_species_Cardamine)
+
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+The C. hirsuta plants were grown in the soil in a greenhouse under short-day conditions (18°C in 16 hours dark and 21°C in 8 hours light). Developing leaf primordia from leaves 5, 6, and 7 were collected three weeks post-germination. Four biological replicates were collected for the leaf samples to generate transcriptomic profiles at the single-cell level. All the experiments were carried out in our department (Department of Comparative Development and Genetics), with fellow colleagues Dr. Bazakos and Nora Papadima-Karanikou handling the experimental setup and execution.
+
+# Plant materials and experimental design
+
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>
+# <span style='font-size: 18px; font-weight: bold;'>Plant materials and experimental design</span>

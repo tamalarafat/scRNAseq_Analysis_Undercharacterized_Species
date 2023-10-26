@@ -1,4 +1,4 @@
-"","p_val","avg_log2FC","pct.1","pct.2","p_val_adj","gene_ID"
+"","WT_p_val","WT_avg_log2FC","WT_pct.1","WT_pct.2","WT_p_val_adj","gene_ID"
 "Chir04Ox-b23440.2",0,0.755609285671285,0.321,0.007,0,"Chir04Ox-b23440.2"
 "Chir07Ox-b25010.2",0,0.266235702235081,0.217,0.009,0,"Chir07Ox-b25010.2"
 "Chir03Ox-b10200.2",0,0.358925772541465,0.26,0.01,0,"Chir03Ox-b10200.2"

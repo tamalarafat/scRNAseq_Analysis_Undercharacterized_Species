@@ -22,3 +22,8 @@
   padding-left: 20px;
   font-size: 8px; /* Adjust the font size for deeper nested TOC levels */
 }
+
+ul {
+  list-style-type: none;
+  padding-left: 1em;
+}

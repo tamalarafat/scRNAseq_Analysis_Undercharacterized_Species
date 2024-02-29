@@ -182,3 +182,52 @@ To determine if there is a significant association (statistically significant en
 
 ## <span style='font-size: 16px; font-weight: bold;'>Trajectory analysis</span>
 The Slingshot tool (Street et al., 2018) was used to perform trajectory analysis for reconstructing developmental lineages. Based on the prior information required to be given as input by different trajectory inference methods, we have decided to use Slingshot to identify developmental lineages and pseudotime inference, as the Slingshot method does not require users to specify the starting cell cluster or end cell cluster of the developmental trajectory. The minimal input to the Slingshot tool is a matrix representing the cells in a low-dimensional space, such as the shared coefficient matrix or the principal components, and a vector of cluster labels of the cells. With these two inputs, Slingshot Identifies the global lineage structure by constructing a minimum spanning tree (MST) connecting the cluster centroids with the _"getLineages"_ function (Street et al., 2018). The following step constructs smooth lineages and infers pseudotime variables by fitting simultaneous principal curves with the _"getCurves"_ function.
+
+## <span style='font-size: 20px; color: green; font-weight: bold;'>Results and Folder organisation</span>
+Organized as follows:  
+Folder name:
+Steps to obtain the object or file (results):: Sections of Materials and Methods (Follow the order of the sections)  
+
+__Analysis_objects:__  
+Sections: 8.1 -> 8.3
+
+__Analysis_scripts:__  
+Scripts to perform integration step
+
+__Differentially_expressed_genes:__  
+
+__DEGs_of_each_cluster:__  
+Sections: 8.12  
+
+__Conserved_DEGs_grouped_by_Replicates:__  
+The “FindConservedMarkers” function of the Seurat tool was used to identify conserved differentially expressed genes (DEGs).  
+
+NOTE: Both “FindMarkers” and “FindConservedMarkers” functions find the same set of DEGs for each cluster. I have used the DEGs identified using the “FindMarkers” (Sections: 8.12) to identify cluster-specific markers and candidate biomarkers.  
+
+__Cluster_specific_markers:__  
+Sections: 8.13  
+
+__Final_Candidate_markers:__  
+Sections: 8.14  
+
+__GEPs:__  
+Sections: 8.7  
+K_44_GEPs: Construction of GEPs; identified GEPs for K = 44 (Cardamine gene IDs)  
+K_44_GEPs_Ortho:  Identified GEPs for K = 44 (Orthologues Arabidopsis gene IDs)  
+
+__RCO_and_STM_findings:__  
+
+__RCO_cell_type_cluster_5:__  
+“cluster_5_candidate_biomarkers.csv”:: Proposed candidate biomarkers (30 genes) identified from Sections: 8.14 for the RCO cell type.  
+“GEP_32_genes.txt”:: Characteristic GEP (GEP-32) of the RCO cell type.  
+“Coefficient_heatmap_Cluster_5.png”:: Heatmap highlighting the coefficient values in the cells of the RCO cell type.  
+“GEP_32_loading_across_cells_UMAP.png”:: Projection of coefficients on the UMAP plot.  
+
+__STM_cell_type_cluster_13:__  
+“cluster_13_candidate_biomarkers.csv”:: Proposed candidate biomarkers (30 genes) identified from Sections: 8.14 for the STM cell type.  
+“GEP_23_genes.txt”:: Characteristic GEP (GEP-23) of the STM cell type.  
+“Coefficient_heatmap_Cluster_13.png”:: Heatmap highlighting the coefficient values in the cells of the STM cell type.  
+“GEP_23_loading_across_cells_UMAP.png”:: Projection of coefficients on the UMAP plot.  
+
+__Main_FIGURES:__  
+Figures included in the thesis

@@ -1,4 +1,0 @@
-"gene_ID","p_val","avg_log2FC","pct.1","pct.2","p_val_adj","AT_ID","TF","TF_family","Gene_code_name","Gene_functions"
-"Chir02Ox-b11050.2",0,0.328458206809338,0.774,0.443,0,"AT1G65486",NA,NA,"STMP4","extracellular region, mitochondrion, molecular_function, nucleus, response to water deprivation"
-"Chir07Ox-b23060.2",0,0.355708222096204,0.812,0.485,0,"AT4G25990",NA,NA,"CIL","molecular_function, nucleus, regulation of DNA-templated transcription"
-"Chir01Ox-b14670.2",0,0.53266234527036,0.89,0.563,0,"AT1G14600","Yes","G2-like","AT1G14600.1","DNA-binding transcription factor activity, nucleus, regulation of DNA-templated transcription"

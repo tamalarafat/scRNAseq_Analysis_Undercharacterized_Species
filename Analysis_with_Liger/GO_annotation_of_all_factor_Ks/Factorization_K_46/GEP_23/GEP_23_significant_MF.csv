@@ -1,4 +1,0 @@
-"","ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
-"GO:0000978","GO:0000978","RNA polymerase II cis-regulatory region sequence-specific DNA binding","4/26","111/21809",8.71469078618964e-06,0.000366017013019965,0.000220160609335317,"KNAT6/BUM/ATK1/BP",4
-"GO:0000981","GO:0000981","DNA-binding transcription factor activity, RNA polymerase II-specific","4/26","272/21809",0.000284998227989236,0.00299248139388698,0.00179998880835307,"KNAT6/BUM/ATK1/BP",4
-"GO:0016879","GO:0016879","ligase activity, forming carbon-nitrogen bonds","2/26","73/21809",0.00340958029468659,0.0286404744753673,0.0172273530678901,"CTPS4/DFL1",2

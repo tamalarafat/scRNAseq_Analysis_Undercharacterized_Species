@@ -1,5 +1,0 @@
-"","ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
-"GO:0000981","GO:0000981","DNA-binding transcription factor activity, RNA polymerase II-specific","2/13","272/21809",0.0110404368991482,0.0478961045531968,0.0266913276147846,"NA/AT3G01472.1",2
-"GO:0080031","GO:0080031","methyl salicylate esterase activity","1/13","19/21809",0.0112696716595757,0.0478961045531968,0.0266913276147846,"ATMES17",1
-"GO:0080032","GO:0080032","methyl jasmonate esterase activity","1/13","19/21809",0.0112696716595757,0.0478961045531968,0.0266913276147846,"ATMES17",1
-"GO:0080161","GO:0080161","auxin transmembrane transporter activity","1/13","19/21809",0.0112696716595757,0.0478961045531968,0.0266913276147846,"LAX3",1

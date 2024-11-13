@@ -1,4 +1,0 @@
-"","ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
-"GO:0030570","GO:0030570","pectate lyase activity","2/20","25/21809",0.00023667762117603,0.00818587423935474,0.00594963290579668,"NA/NA",2
-"GO:0016837","GO:0016837","carbon-oxygen lyase activity, acting on polysaccharides","2/20","32/21809",0.000389803535207369,0.00818587423935474,0.00594963290579668,"NA/NA",2
-"GO:0042803","GO:0042803","protein homodimerization activity","3/20","204/21809",0.000817512906980694,0.0114451806977297,0.00831855238682109,"ANN1/AtGATA18/JKD",3

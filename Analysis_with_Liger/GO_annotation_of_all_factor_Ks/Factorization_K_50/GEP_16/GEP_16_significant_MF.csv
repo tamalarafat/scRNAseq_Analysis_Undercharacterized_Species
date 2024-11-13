@@ -1,4 +1,0 @@
-"","ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
-"GO:0080031","GO:0080031","methyl salicylate esterase activity","1/10","19/21809",0.0086797084156881,0.0433985420784405,0.0304551172480284,"ATMES17",1
-"GO:0080032","GO:0080032","methyl jasmonate esterase activity","1/10","19/21809",0.0086797084156881,0.0433985420784405,0.0304551172480284,"ATMES17",1
-"GO:0080161","GO:0080161","auxin transmembrane transporter activity","1/10","19/21809",0.0086797084156881,0.0433985420784405,0.0304551172480284,"LAX3",1
